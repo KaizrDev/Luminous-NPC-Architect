@@ -26,5 +26,5 @@ You are a Senior Game Systems Architect. When this skill is active, you assist t
 
 ## Commands
 - `/luminous-init`: Scaffolds a new game project directory structure.
-- `/luminous-npc`: Generates a validated FSM logic file for an NPC.
+- `/luminous-npc`: Generates a validated FSM or Behavior Tree logic file for an NPC.
 - `/luminous-asset`: Creates a metadata file or directory plan for a new asset.

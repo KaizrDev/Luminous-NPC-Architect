@@ -18,7 +18,7 @@ import os
 import argparse
 
 
-# ─── ANSI Colors ──────────────────────────────────────────────────────────────
+# --- ANSI Colors --------------------------------------------------------------
 
 class Color:
     GREEN = "\033[92m"
@@ -30,22 +30,22 @@ class Color:
 
 
 def success(msg):
-    print(f"{Color.GREEN}✓ {msg}{Color.RESET}")
+    print(f"{Color.GREEN}[OK] {msg}{Color.RESET}")
 
 
 def warning(msg):
-    print(f"{Color.YELLOW}⚠ {msg}{Color.RESET}")
+    print(f"{Color.YELLOW}[WARN] {msg}{Color.RESET}")
 
 
 def error(msg):
-    print(f"{Color.RED}✗ {msg}{Color.RESET}")
+    print(f"{Color.RED}[ERR] {msg}{Color.RESET}")
 
 
 def info(msg):
-    print(f"{Color.CYAN}ℹ {msg}{Color.RESET}")
+    print(f"{Color.CYAN}[INFO] {msg}{Color.RESET}")
 
 
-# ─── FSM Validator ────────────────────────────────────────────────────────────
+# --- FSM Validator ------------------------------------------------------------
 
 def verify_fsm(data):
     """
@@ -132,7 +132,7 @@ def verify_fsm(data):
     return passed, messages
 
 
-# ─── Behavior Tree Validator ─────────────────────────────────────────────────
+# --- Behavior Tree Validator --------------------------------------------------
 
 def verify_behavior_tree(data):
     """
@@ -221,7 +221,7 @@ def verify_behavior_tree(data):
     return passed, messages
 
 
-# ─── Directory Validator ──────────────────────────────────────────────────────
+# --- Directory Validator ------------------------------------------------------
 
 def verify_structure(path):
     """
@@ -278,7 +278,7 @@ def verify_structure(path):
     return passed, messages
 
 
-# ─── Main ─────────────────────────────────────────────────────────────────────
+# --- Main ---------------------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser(
@@ -304,9 +304,9 @@ Examples:
 
     args = parser.parse_args()
 
-    print(f"\n{Color.BOLD}{'═' * 50}{Color.RESET}")
+    print(f"\n{Color.BOLD}{'=' * 50}{Color.RESET}")
     print(f"{Color.BOLD}  Luminous Verify{Color.RESET}")
-    print(f"{Color.BOLD}{'═' * 50}{Color.RESET}\n")
+    print(f"{Color.BOLD}{'=' * 50}{Color.RESET}\n")
 
     if args.type == "fsm":
         info(f"Validating FSM: {args.path}")
@@ -356,7 +356,7 @@ Examples:
         else:
             info(msg)
 
-    print(f"\n{Color.BOLD}{'─' * 50}{Color.RESET}")
+    print(f"\n{Color.BOLD}{'-' * 50}{Color.RESET}")
     if passed:
         success("Validation PASSED")
     else:
