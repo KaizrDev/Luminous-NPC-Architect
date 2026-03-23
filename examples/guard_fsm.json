@@ -1,0 +1,49 @@
+{
+  "npc": "guard",
+  "type": "fsm",
+  "initial_state": "idle",
+  "states": [
+    {
+      "name": "idle",
+      "description": "Guard stands at post, watching for threats.",
+      "actions": ["play_idle_animation", "scan_for_player"]
+    },
+    {
+      "name": "patrol",
+      "description": "Guard walks between waypoints.",
+      "actions": ["move_to_next_waypoint", "play_walk_animation"]
+    },
+    {
+      "name": "alert",
+      "description": "Guard has detected something suspicious.",
+      "actions": ["play_alert_animation", "look_toward_player"]
+    },
+    {
+      "name": "chase",
+      "description": "Guard actively pursues the player.",
+      "actions": ["move_toward_player", "play_run_animation"]
+    },
+    {
+      "name": "attack",
+      "description": "Guard attacks the player in melee range.",
+      "actions": ["play_attack_animation", "deal_damage"]
+    },
+    {
+      "name": "return_to_post",
+      "description": "Guard returns to original position after losing the player.",
+      "actions": ["move_to_home_position", "play_walk_animation"]
+    }
+  ],
+  "transitions": [
+    { "from": "idle", "to": "patrol", "condition": "timer_expired(5.0)" },
+    { "from": "patrol", "to": "idle", "condition": "reached_waypoint_and_wait" },
+    { "from": "idle", "to": "alert", "condition": "player_in_range(15.0)" },
+    { "from": "patrol", "to": "alert", "condition": "player_in_range(15.0)" },
+    { "from": "alert", "to": "chase", "condition": "player_in_range(10.0)" },
+    { "from": "alert", "to": "idle", "condition": "player_out_of_range(20.0)" },
+    { "from": "chase", "to": "attack", "condition": "player_in_range(2.0)" },
+    { "from": "chase", "to": "return_to_post", "condition": "player_out_of_range(25.0)" },
+    { "from": "attack", "to": "chase", "condition": "player_out_of_range(2.0)" },
+    { "from": "return_to_post", "to": "idle", "condition": "reached_home_position" }
+  ]
+}

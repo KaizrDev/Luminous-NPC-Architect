@@ -1,0 +1,88 @@
+{
+  "npc": "boss_dragon",
+  "type": "behavior_tree",
+  "root": {
+    "type": "selector",
+    "name": "dragon_root",
+    "children": [
+      {
+        "type": "sequence",
+        "name": "rage_mode",
+        "children": [
+          { "type": "condition", "name": "is_health_below", "params": { "threshold": 0.25 } },
+          { "type": "action", "name": "enter_rage_state" },
+          {
+            "type": "selector",
+            "name": "rage_attacks",
+            "children": [
+              {
+                "type": "sequence",
+                "name": "fire_breath_combo",
+                "children": [
+                  { "type": "condition", "name": "is_player_in_range", "params": { "range": 15.0 } },
+                  { "type": "action", "name": "fire_breath_attack" },
+                  { "type": "action", "name": "tail_sweep" }
+                ]
+              },
+              { "type": "action", "name": "dive_bomb_attack" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "sequence",
+        "name": "aerial_assault",
+        "children": [
+          { "type": "condition", "name": "is_airborne" },
+          {
+            "type": "selector",
+            "name": "air_attacks",
+            "children": [
+              {
+                "type": "sequence",
+                "name": "ranged_fire",
+                "children": [
+                  { "type": "condition", "name": "is_player_in_range", "params": { "range": 30.0 } },
+                  { "type": "action", "name": "fireball_barrage" }
+                ]
+              },
+              { "type": "action", "name": "land_near_player" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "sequence",
+        "name": "ground_combat",
+        "children": [
+          { "type": "condition", "name": "is_player_in_range", "params": { "range": 8.0 } },
+          {
+            "type": "selector",
+            "name": "melee_attacks",
+            "children": [
+              {
+                "type": "sequence",
+                "name": "bite_attack",
+                "children": [
+                  { "type": "condition", "name": "is_player_in_front" },
+                  { "type": "action", "name": "bite_attack" }
+                ]
+              },
+              { "type": "action", "name": "claw_swipe" }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "sequence",
+        "name": "take_flight",
+        "children": [
+          { "type": "condition", "name": "is_on_ground" },
+          { "type": "condition", "name": "is_flight_cooldown_ready" },
+          { "type": "action", "name": "take_off" }
+        ]
+      },
+      { "type": "action", "name": "idle_roar" }
+    ]
+  }
+}
